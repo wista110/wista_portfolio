@@ -47,7 +47,7 @@ export default function Contact() {
               <span className="text-white">Contact</span>
             </h1>
             <p className="text-xl text-gray-100 max-w-3xl mx-auto mb-8">
-              お仕事のご相談、共同研究、技術的なディスカッションなど、
+              お仕事のご相談、アプリ開発、技術的な相談など、<br />
               どのようなことでもお気軽にお問い合わせください。
             </p>
           </div>

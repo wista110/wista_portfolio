@@ -143,7 +143,7 @@ export default function Works() {
               <span className="text-white">Works</span>
             </h1>
             <p className="text-xl text-gray-100 max-w-3xl mx-auto mb-8">
-              AI・機械学習・IoT・モバイルアプリケーション開発プロジェクトをご紹介します。
+              AI・機械学習・IoT・モバイルアプリケーション開発プロジェクトをご紹介します。<br />
               研究から実用化まで、幅広い技術領域での取り組みをご覧ください。
             </p>
           </div>
@@ -331,7 +331,7 @@ export default function Works() {
               プロジェクトに興味をお持ちですか？
             </h2>
             <p className="text-lg text-primary-600 mb-8">
-              詳細な説明や技術的な質問、協業のご相談など、お気軽にお問い合わせください。
+              詳細な説明や技術的な質問や意見、協業のご相談など、お気軽にお問い合わせください。
             </p>
             <Link href="/contact" className="btn-primary">
               お問い合わせ

@@ -10,12 +10,6 @@ interface TimelineEvent {
   type: 'education' | 'work' | 'award'
 }
 
-interface Skill {
-  name: string
-  level: number // 1-100
-  category: 'Programming' | 'AI/ML' | 'Tools' | 'Cloud'
-}
-
 export default function About() {
   const timelineEvents: TimelineEvent[] = [
     {
@@ -68,30 +62,6 @@ export default function About() {
     },
   ]
 
-  const skills: Skill[] = [
-    { name: 'Python', level: 95, category: 'Programming' },
-    { name: 'JavaScript/TypeScript', level: 85, category: 'Programming' },
-    { name: 'Java', level: 70, category: 'Programming' },
-    { name: 'C++', level: 65, category: 'Programming' },
-    { name: 'Go', level: 60, category: 'Programming' },
-    { name: 'TensorFlow', level: 90, category: 'AI/ML' },
-    { name: 'PyTorch', level: 90, category: 'AI/ML' },
-    { name: 'scikit-learn', level: 85, category: 'AI/ML' },
-    { name: 'Transformers', level: 80, category: 'AI/ML' },
-    { name: 'OpenCV', level: 75, category: 'AI/ML' },
-    { name: 'Pandas/NumPy', level: 95, category: 'AI/ML' },
-    { name: 'React/Next.js', level: 80, category: 'Programming' },
-    { name: 'Node.js', level: 75, category: 'Programming' },
-    { name: 'FastAPI', level: 85, category: 'Programming' },
-    { name: 'Docker', level: 80, category: 'Tools' },
-    { name: 'Git', level: 90, category: 'Tools' },
-    { name: 'Linux', level: 85, category: 'Tools' },
-    { name: 'AWS', level: 75, category: 'Cloud' },
-    { name: 'GCP', level: 70, category: 'Cloud' },
-    { name: 'MongoDB', level: 75, category: 'Tools' },
-    { name: 'PostgreSQL', level: 80, category: 'Tools' },
-  ]
-
   const personalInterests = [
     { icon: '📚', title: '読書', description: '技術書のほかに、ラノベや漫画もよく読みます' },
     { icon: '🎮', title: 'ゲーム', description: '対戦ゲームや協力型のゲームが好きです' },
@@ -116,21 +86,6 @@ export default function About() {
     }
   }
 
-  const getSkillColor = (category: Skill['category']) => {
-    switch (category) {
-      case 'Programming':
-        return 'bg-blue-200'
-      case 'AI/ML':
-        return 'bg-green-200'
-      case 'Tools':
-        return 'bg-yellow-200'
-      case 'Cloud':
-        return 'bg-purple-200'
-      default:
-        return 'bg-gray-200'
-    }
-  }
-
   return (
     <>
       <Head>
@@ -147,8 +102,8 @@ export default function About() {
               <span className="text-white">About Me</span>
             </h1>
             <p className="text-xl text-gray-100 max-w-3xl mx-auto mb-8">
-              プログラミングだけでなく、溶接や機械加工など、モノ作りが好きなエンジニアです。
-              趣味でアプリ開発やモノづくりをしています。生成AIを活用して新たなチャレンジをしています。
+              プログラミングだけでなく、溶接や機械加工など、モノ作りが好きです。<br />
+              生成AIを活用し、アプリ開発やモノづくりなどをしています。
             </p>
           </div>
         </div>
@@ -160,7 +115,7 @@ export default function About() {
           <div className="animate-fade-in">
             <h2 className="section-title">Philosophy</h2>
             <blockquote className="text-xl text-primary-700 italic mb-8 leading-relaxed">
-              「素晴らしい技術を手の届かない技術で終わらせず、
+              「新しい技術を手の届かない技術で終わらせず、
               多くの人に提供していきたいと考えています。」
             </blockquote>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -180,9 +135,9 @@ export default function About() {
               </div>
               <div className="card">
                 <div className="text-2xl mb-3">🤝</div>
-                <h3 className="font-semibold text-primary-800 mb-2">協働の精神</h3>
+                <h3 className="font-semibold text-primary-800 mb-2">人に寄り添う</h3>
                 <p className="text-sm text-primary-600">
-                  技術力よりもまずはチームワークが大事だと考えています。
+                  作って終わりではなく、人に喜んでもらうまで改善を続けます。
                 </p>
               </div>
             </div>
@@ -196,7 +151,7 @@ export default function About() {
           <div className="text-center mb-12 animate-fade-in">
             <h2 className="section-title">Career Timeline</h2>
             <p className="section-subtitle mx-auto">
-              これまでの経歴と主要なマイルストーンをご紹介します。
+              これまでの経歴をご紹介します。
             </p>
           </div>
           <div className="relative">
@@ -225,46 +180,6 @@ export default function About() {
               </div>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* Skills & Technologies */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12 animate-fade-in">
-            <h2 className="section-title">Skills & Technologies</h2>
-            <p className="section-subtitle mx-auto">
-              現在のスキルレベルと習熟度をカテゴリ別にご紹介します。
-            </p>
-          </div>
-          
-          {/* Skills grouped by category */}
-          {['Programming', 'AI/ML', 'Tools', 'Cloud'].map((category, categoryIndex) => (
-            <div key={category} className="mb-12">
-              <h3 className="text-xl font-semibold text-primary-800 mb-6">{category}</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {skills
-                  .filter(skill => skill.category === category)
-                  .map((skill, index) => (
-                    <div
-                      key={skill.name}
-                      className={`card animate-scale-in delay-${(categoryIndex * 100) + (index * 50)}`}
-                    >
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="font-medium text-primary-800">{skill.name}</span>
-                        <span className="text-sm text-primary-600">{skill.level}%</span>
-                      </div>
-                      <div className="w-full bg-primary-100 rounded-full h-2">
-                        <div
-                          className={`h-2 rounded-full ${getSkillColor(skill.category)}`}
-                          style={{ width: `${skill.level}%` }}
-                        ></div>
-                      </div>
-                    </div>
-                  ))}
-              </div>
-            </div>
-          ))}
         </div>
       </section>
 
@@ -300,7 +215,7 @@ export default function About() {
               気軽にご連絡下さい！
             </h2>
             <p className="text-xl text-primary-600 mb-8 leading-relaxed">
-              プログラミング、モノづくり、AIや技術の相談など、お気軽にご連絡下さい。
+              プログラミング、モノづくり、アプリ開発、AIや技術の相談など、お気軽にご連絡下さい。
             </p>
             <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
               <a href="/contact" className="btn-primary">
