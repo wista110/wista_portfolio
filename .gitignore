@@ -51,6 +51,10 @@ pids
 .rts2_cache_es/
 .rts2_cache_umd/
 
+# Large media (use external hosting or Git LFS for deployment)
+*.mov
+/public/GiftyTaskdemo.mov
+
 # Optional REPL history
 .node_repl_history
 

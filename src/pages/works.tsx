@@ -14,12 +14,15 @@ interface Project {
   status: '完了' | '進行中' | '未着手'
   githubUrl?: string
   demoUrl?: string
+  /** 指定時はデモリンククリックでこの動画をモーダル再生 */
+  demoVideoPath?: string
   imageUrl?: string
 }
 
 export default function Works() {
   const [selectedCategory, setSelectedCategory] = useState<ProjectCategory>('All')
   const [searchTerm, setSearchTerm] = useState('')
+  const [demoVideoModal, setDemoVideoModal] = useState<{ videoPath: string; title: string } | null>(null)
 
   const projects: Project[] = [
     {
@@ -41,8 +44,8 @@ export default function Works() {
       category: 'Mobile',
       technologies: ['Swift', 'SwiftUI', 'Firebase'],
       status: '進行中',
-      githubUrl: 'https://github.com/example/iot-dashboard',
-      demoUrl: 'https://demo.example.com/iot',
+      githubUrl: 'https://github.com/datefujinari/giftytask',
+      demoVideoPath: '/GiftyTaskdemo.mov',
     },
     {
       id: '3',
@@ -127,6 +130,39 @@ export default function Works() {
     }
   }
 
+  const openDemoVideo = (project: Project) => {
+    if (project.demoVideoPath) {
+      setDemoVideoModal({ videoPath: project.demoVideoPath, title: project.title })
+    }
+  }
+
+  const renderDemoLink = (project: Project, label: string) => {
+    if (project.demoVideoPath) {
+      return (
+        <button
+          type="button"
+          onClick={() => openDemoVideo(project)}
+          className="text-primary-600 hover:text-primary-800 transition-colors text-sm cursor-pointer"
+        >
+          {label} →
+        </button>
+      )
+    }
+    if (project.demoUrl) {
+      return (
+        <a
+          href={project.demoUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-primary-600 hover:text-primary-800 transition-colors text-sm"
+        >
+          {label} →
+        </a>
+      )
+    }
+    return null
+  }
+
   return (
     <>
       <Head>
@@ -199,16 +235,7 @@ export default function Works() {
                       GitHub →
                     </a>
                   )}
-                  {project.demoUrl && (
-                    <a
-                      href={project.demoUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-primary-600 hover:text-primary-800 transition-colors text-sm"
-                    >
-                      Live Demo →
-                    </a>
-                  )}
+                  {(project.demoUrl || project.demoVideoPath) && renderDemoLink(project, 'デモを見る')}
                 </div>
               </div>
             ))}
@@ -300,16 +327,7 @@ export default function Works() {
                       GitHub
                     </a>
                   )}
-                  {project.demoUrl && (
-                    <a
-                      href={project.demoUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-primary-600 hover:text-primary-800 transition-colors"
-                    >
-                      Demo
-                    </a>
-                  )}
+                  {(project.demoUrl || project.demoVideoPath) && renderDemoLink(project, 'Demo')}
                 </div>
               </div>
             ))}
@@ -339,6 +357,45 @@ export default function Works() {
           </div>
         </div>
       </section>
+
+      {/* デモ動画モーダル */}
+      {demoVideoModal && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70"
+          onClick={() => setDemoVideoModal(null)}
+          role="dialog"
+          aria-modal="true"
+          aria-label="デモ動画"
+        >
+          <div
+            className="relative bg-white rounded-2xl shadow-2xl max-w-4xl w-full overflow-hidden"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between p-4 border-b border-primary-100">
+              <h3 className="text-lg font-semibold text-primary-800">{demoVideoModal.title}</h3>
+              <button
+                type="button"
+                onClick={() => setDemoVideoModal(null)}
+                className="p-2 text-primary-600 hover:text-primary-800 hover:bg-primary-50 rounded-xl transition-colors"
+                aria-label="閉じる"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            <div className="aspect-video bg-black">
+              <video
+                src={demoVideoModal.videoPath}
+                controls
+                autoPlay
+                playsInline
+                className="w-full h-full object-contain"
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </>
   )
 }

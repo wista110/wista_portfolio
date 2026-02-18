@@ -1,16 +1,20 @@
 import React, { useState, useEffect } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
+import dynamic from 'next/dynamic'
 import { ArrowRight, ChevronDown, Mail } from 'lucide-react'
-import { motion } from 'framer-motion'
+
+// framer-motion は useReducer 等のフックを使うため SSR でエラーになるため、クライアント専用で読み込む
+const AnimatedHeroCard = dynamic(
+  () => import('@/components/AnimatedHeroCard'),
+  { ssr: false, loading: () => <div className="backdrop-blur-lg bg-white/10 border border-white/20 rounded-3xl p-8 sm:p-12 shadow-2xl min-h-[200px]" /> }
+)
+const AnimatedAboutBlock = dynamic(
+  () => import('@/components/AnimatedAboutBlock'),
+  { ssr: false, loading: () => <div className="text-center mb-16 min-h-[120px]" /> }
+)
 
 export default function Home() {
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    setIsVisible(true);
-  }, []);
-
   const skills = [
     'Python', 'JavaScript', 'TypeScript', 'React', 'Next.js', 'Node.js',
     'TensorFlow', 'PyTorch', 'Docker', 'AWS', 'Git', 'MongoDB'
@@ -51,12 +55,7 @@ export default function Home() {
       <section className="hero-transparent relative min-h-screen flex items-center justify-center overflow-hidden">
         {/* Hero Content with Glass Card */}
         <div className="relative z-20 text-center px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 30 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="backdrop-blur-lg bg-white/10 border border-white/20 rounded-3xl p-8 sm:p-12 shadow-2xl"
-          >
+          <AnimatedHeroCard>
             <div className="space-y-6">
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight">
                 <span className="bg-gradient-to-r from-white to-gray-100 bg-clip-text text-transparent drop-shadow-lg">
@@ -91,7 +90,7 @@ export default function Home() {
                 </Link>
               </div>
             </div>
-          </motion.div>
+          </AnimatedHeroCard>
         </div>
 
         {/* Scroll indicator */}
@@ -107,13 +106,7 @@ export default function Home() {
       {/* About Preview Section */}
       <section className="section-background-white py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
+          <AnimatedAboutBlock>
             <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-6">
               企業のIT基盤を支える社内SEとして
             </h2>
@@ -121,7 +114,7 @@ export default function Home() {
               業務プロセスの改善からセキュリティ対策まで、企業のITインフラを安定して運用するための
               ソリューションを提供します。社内システムの構築・保守・運用を通じて、組織の生産性向上をサポートします。
             </p>
-          </motion.div>
+          </AnimatedAboutBlock>
         </div>
       </section>
 
