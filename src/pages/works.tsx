@@ -45,7 +45,7 @@ export default function Works() {
       technologies: ['Swift', 'SwiftUI', 'Firebase'],
       status: '進行中',
       githubUrl: 'https://github.com/datefujinari/giftytask',
-      demoVideoPath: '/GiftyTaskdemo.mov',
+      demoVideoPath: 'https://17h3nkpxwh7pewd9.public.blob.vercel-storage.com/GiftyTaskdemo1.mov',
     },
     {
       id: '3',
